@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://fualxg844c7l"]
+
+[ext_resource type="Script" uid="uid://dcarnlmntqe4c" path="res://pause.gd" id="1_sn2qd"]
+
+[node name="Pausemenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sn2qd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 125.2
+offset_bottom = 50.0
+
+[node name="Reprendre" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Reprendre"
+
+[node name="Quitter" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Quitter"
+
+[connection signal="pressed" from="VBoxContainer/Reprendre" to="." method="_on_reprendre_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quitter" to="." method="_on_quitter_pressed"]
