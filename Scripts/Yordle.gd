@@ -16,20 +16,20 @@ var states = []
 func _ready() -> void:
 	last_position = global_position
 func _process(delta: float) -> void:
-	if snapped((distance_parcourue * 10)/500 , 0.1) == max_dist:
-		set_target(self.position)
+	if snapped((distance_parcourue * 10)/500 , 0.1) >= max_dist:
+		set_target(global_position)
 		velocity = Vector2.ZERO
-		
+		return
+
 	if navigation_agent.is_navigation_finished():
 		velocity = Vector2.ZERO
 		last_position = global_position
 		return
 
-	var direction = navigation_agent.get_next_path_position() - global_position
-	direction = direction.normalized()
+	var next_pos = navigation_agent.get_next_path_position()
+	var direction = (next_pos - global_position).normalized()
 
 	velocity = velocity.lerp(direction * speed, acceleration * delta)
-	velocity = velocity.move_toward(direction * speed, acceleration)
 
 	detec_hide()
 	move_and_slide()
@@ -38,8 +38,9 @@ func _process(delta: float) -> void:
 	var delta_dist = global_position.distance_to(last_position)
 	distance_parcourue += delta_dist
 	last_position = global_position
-	if self.label:
-		label.text = str(snapped((distance_parcourue * 10)/500 , 0.1))+"mètres"
+
+	if label:
+		label.text = str(snapped((distance_parcourue * 10) / 500, 0.1)) + " mètres"
 
 
 
